@@ -21,7 +21,7 @@
     // `retrieveNewURL` accepts the name of the current file and invokes the `/presignedUrl` endpoint to
     // generate a pre-signed URL for use in uploading that file:
     function retrieveNewURL(file, cb) {
-        fetch(`/presignedUrl?name=${file.name}`).then((response) => {
+        fetch(`/server/presignedUrl?name=${file.name}`).then((response) => {
             response.text().then((url) => {
                 cb(file, url);
             });

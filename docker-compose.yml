@@ -2,6 +2,20 @@
 version: "3.8"
 
 services:
+  reverse-proxy:
+    image: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - mode: host
+        protocol: tcp
+        published: 80
+        target: 80
+    depends_on:
+      - minio
+      - server
+    networks:
+      - minio-local
   minio:
     image: minio/minio
     command: server /data/minio
@@ -14,8 +28,6 @@ services:
       - minio-local
   server:
     container_name: server
-    ports:
-      - 8080:8080
     build: .
     environment:
       - MINIO_HOST=192.168.44.76
