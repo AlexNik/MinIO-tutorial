@@ -35,7 +35,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
             filename = self.path.split('=')[1]
             original_minio_str = client.presigned_put_object(bucket_name, filename)
-            self.wfile.write(str.encode(original_minio_str))
+            fixed_minio_str = original_minio_str.replace(minio_url, remote_url)
+            self.wfile.write(str.encode(fixed_minio_str))
+
             return
         elif '/files' in self.path:
             self.send_response(200, 'OK')

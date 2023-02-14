@@ -19,8 +19,6 @@ services:
   minio:
     image: minio/minio
     command: server /data/minio
-    ports:
-      - 9000:9000
     environment:
       - MINIO_ROOT_USER=minioadmin
       - MINIO_ROOT_PASSWORD=minioadmin
@@ -30,10 +28,11 @@ services:
     container_name: server
     build: .
     environment:
-      - MINIO_HOST=192.168.44.76
+      - MINIO_HOST=minio
       - MINIO_PORT=9000
       - MINIO_USER=minioadmin
       - MINIO_PASSWORD=minioadmin
+      - REMOTE_URL=192.168.44.76/minio-api
     networks:
       - minio-local
 
